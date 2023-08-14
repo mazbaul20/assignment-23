@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class ExpenseCategoryController extends Controller
 {
+    public function ExpenseCategoryPage(){
+        return view('frontend.pages.dashboard.expenseCategory-page');
+    }
     public function expenseCategoryList()
     {
         $user_id = auth()->user()->id;

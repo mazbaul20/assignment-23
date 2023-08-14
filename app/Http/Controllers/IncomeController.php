@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class IncomeController extends Controller
 {
+    public function IncomePage(){
+        return view('frontend.pages.dashboard.income-page');
+    }
     public function IncomeList()
     {
         $user_id = auth()->user()->id;
@@ -15,24 +18,24 @@ class IncomeController extends Controller
 
     public function createIncome(Request $request)
     {
-        dd($request->all());
-        // $name = $request->name;
-        // $amount = $request->input('amount');
+        // dd($request->all());
+        $name = $request->input('name');
+        $amount = $request->input('amount');
+        $desc = $request->input('desc');
 
-        // $desc = $request->input('desc');
-        // $date = $request->date;
+        $date = $request->date("Y-m-d H:i:s");
 
-        // $user_id = auth()->user()->id;
-        // $income_cat_id = $request->income_cat_id;
+        $user_id = auth()->user()->id;
+        $income_category_id = $request->input('income_category_id');
 
-        // return Income::create([
-        //     'name' => $name,
-        //     'amount' => $amount,
-        //     'desc' => $desc,
-        //     'date' => $date,
-        //     'user_id' => $user_id,
-        //     'income_category_id' => $income_cat_id
-        // ]);
+        return Income::create([
+            'name' => $name,
+            'amount' => $amount,
+            'desc' => $desc,
+            'date' => $date,
+            'user_id' => $user_id,
+            'income_category_id' => $income_category_id
+        ]);
     }
 
     public function updateIncome(Request $request)

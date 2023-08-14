@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
@@ -18,14 +17,14 @@ use App\Http\Controllers\ExpenseCategoryController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
- */
+*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('frontend.pages.dashboard.dashboard-page');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -36,11 +35,17 @@ Route::middleware('auth')->group(function () {
 
 // Ajax api
 Route::middleware('auth')->group(function () {
+    // Page Route
+    Route::get('/income-category',[IncomeCategoryController::class,'IncomeCategoryPage']);
+    Route::get('/expense-category',[ExpenseCategoryController::class,'ExpenseCategoryPage']);
+    Route::get('/income-page',[IncomeController::class,'IncomePage']);
+    Route::get('/expense-page',[ExpenseController::class,'ExpensePage']);
+
     // Income Category
     Route::get('/list-income-category', [IncomeCategoryController::class, 'incomeCategoryList'])->name('list.income.Category');
     Route::post('/create-income-category', [IncomeCategoryController::class, 'incomeCategoryCreate'])->name('create.income.Category');
     Route::post('/incomeCategory-by-id', [IncomeCategoryController::class, 'incomeCategoryById'])->name('incomeCategory.by.id');
-    Route::post('/update-income-category', [IncomeCategoryController::class, 'incomeCategoryUpdate'])->name('update.income.category');
+    Route::patch('/update-income-category', [IncomeCategoryController::class, 'incomeCategoryUpdate'])->name('update.income.category');
     Route::post('/delete-income-category', [IncomeCategoryController::class, 'incomeCategoryDelete'])->name('delete.income.category');
 
     // Expense Category
@@ -58,13 +63,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/delete-income', [IncomeController::class, 'deleteIncome'])->name('delete-income');
 
     // Expense
-    Route::get('/expense-list', [ExpenseController::class, 'ExpenseList'])->name('expense-list');
+    Route::get('/list-expense', [ExpenseController::class, 'ExpenseList'])->name('expense-list');
     Route::post('/create-expense', [ExpenseController::class, 'createExpense'])->name('create-expense');
     Route::post('/expensen-by-id', [ExpenseController::class, 'updateExpense'])->name('expensen-by-id');
     Route::post('/update-expense', [ExpenseController::class, 'updateExpense'])->name('expense-update');
     Route::post('/delete-expense', [ExpenseController::class, 'deleteExpense'])->name('delete-expense');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 
 Route::get('logout',[UserController::class,'UserLogout']);
