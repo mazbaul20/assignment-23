@@ -21,10 +21,10 @@
         let id = $('#deleteID').val();
         $('#delete-modal-close').click();
         showLoader();
-        let res = await axios.post('/delete-category',{'id':id});
+        let res = await axios.post('/delete-income',{'id':id});
         hideLoader();
         if(res.data===1){
-            successToast("Request Complete");
+            successToast("Income Deleted successful");
             await getList();
         }else{
             errorToast("Request Fail!");

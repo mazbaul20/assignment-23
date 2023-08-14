@@ -16,7 +16,11 @@
                         <tr class="bg-light">
                             <th>No</th>
                             <th>Name</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Date</th>
                             <th>User Id</th>
+                            <th>Income Category Id</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -30,7 +34,7 @@
 </div>
 
 <script>
-    // getList();
+    getList();
     async function getList(){
         showLoader();
         const res = await axios.get('/list-income');
@@ -46,12 +50,12 @@
             let row=(`
                 <tr>
                     <td>${index+1}</td>
-                    <td>
-                        ${item['name']}
-                    </td>
-                    <td>
-                        ${item['user_id']}
-                    </td>
+                    <td>${item['name']}</td>
+                    <td>${item['amount']}</td>
+                    <td>${item['desc']}</td>
+                    <td>${item['date']}</td>
+                    <td>${item['user_id']}</td>
+                    <td>${item['income_category_id']}</td>
                     <td>
                         <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
                         <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
@@ -63,14 +67,14 @@
 
         $('.editBtn').on('click',async function(){
             let id=$(this).data('id');
-            // await FillUpUpdateForm(id);
-            // $('#update-modal').modal('show');
+            await FillUpUpdateForm(id);
+            $('#update-modal').modal('show');
         });
         
         $('.deleteBtn').on('click',function(){
             let id=$(this).data('id');
-            // $('#delete-modal').modal('show');
-            // $('#deleteID').val(id)
+            $('#delete-modal').modal('show');
+            $('#deleteID').val(id)
         });
         
         tableData.DataTable({

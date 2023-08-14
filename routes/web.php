@@ -57,9 +57,10 @@ Route::middleware('auth')->group(function () {
 
     // Income
     Route::get('/list-income', [IncomeController::class, 'IncomeList'])->name('list-income');
+    Route::get('/getincome-category-id', [IncomeController::class, 'getIncomeCategoryId']);
     Route::post('/create-income', [IncomeController::class, 'createIncome'])->name('create-income');
     Route::post('/income-by-id', [IncomeController::class, 'incomeById'])->name('income-by-id');
-    Route::post('/update-income', [IncomeController::class, 'updateIncome'])->name('update-income');
+    Route::patch('/update-income', [IncomeController::class, 'updateIncome'])->name('update-income');
     Route::post('/delete-income', [IncomeController::class, 'deleteIncome'])->name('delete-income');
 
     // Expense
